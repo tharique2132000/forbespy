@@ -124,11 +124,21 @@ def signup_clubhouse():
     def run_signup_browser():
         try:
             chrome_options = Options()
-            chrome_options.add_argument("--headless")  # Run in headless mode for cloud
-            chrome_options.add_argument("--no-sandbox")
-            chrome_options.add_argument("--disable-dev-shm-usage")
-            chrome_options.add_argument("--disable-gpu")
-            chrome_options.add_argument("--window-size=1920,1080")
+            
+            # Check if running in cloud environment
+            is_cloud = os.getenv('RENDER', False) or os.getenv('PORT', False)
+            
+            if is_cloud:
+                # Cloud deployment - headless mode
+                chrome_options.add_argument("--headless")
+                chrome_options.add_argument("--no-sandbox")
+                chrome_options.add_argument("--disable-dev-shm-usage")
+                chrome_options.add_argument("--disable-gpu")
+                chrome_options.add_argument("--window-size=1920,1080")
+            else:
+                # Local development - visible browser
+                chrome_options.add_experimental_option("detach", True)
+            
             driver = webdriver.Chrome(options=chrome_options)
             driver.get("https://www.clubhouse.com/signin")
             
