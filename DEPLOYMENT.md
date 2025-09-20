@@ -28,7 +28,7 @@
 ### Step 4: Environment Variables
 Add these environment variables in Render dashboard:
 - `PYTHON_VERSION`: `3.11.0`
-- `DATA_DIR`: `/app/data` (optional)
+- `DATA_DIR`: `/tmp/data` (optional - uses /tmp/data by default)
 
 ### Step 5: Deploy
 1. Click "Create Web Service"

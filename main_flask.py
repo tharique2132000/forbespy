@@ -16,12 +16,19 @@ GIF_URL = 'https://www.clubhouse.com/web_api/gif_reaction'
 CHANNEL_FEED_URL = 'https://www.clubhouse.com/web_api/get_feed_v3'
 
 # File paths - use data directory for cloud deployment
-DATA_DIR = os.getenv('DATA_DIR', '/app/data')
+DATA_DIR = os.getenv('DATA_DIR', '/tmp/data')
 TOKEN_FILE = os.path.join(DATA_DIR, 'web_token.txt')
 GIPHY_FILE = os.path.join(DATA_DIR, 'giphy.txt')
 
 # Ensure data directory exists
-os.makedirs(DATA_DIR, exist_ok=True)
+try:
+    os.makedirs(DATA_DIR, exist_ok=True)
+except PermissionError:
+    # Fallback to current directory if /tmp is not writable
+    DATA_DIR = os.path.join(os.getcwd(), 'data')
+    TOKEN_FILE = os.path.join(DATA_DIR, 'web_token.txt')
+    GIPHY_FILE = os.path.join(DATA_DIR, 'giphy.txt')
+    os.makedirs(DATA_DIR, exist_ok=True)
 
 # Global bot state
 bot_running = False
