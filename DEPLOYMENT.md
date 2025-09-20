@@ -73,8 +73,18 @@ const API_BASE_URL = 'https://your-app-name.onrender.com';
 
 ### Fix Build Errors
 If you get pydantic compilation errors:
+
+**Option 1: Use Flask (Recommended)**
+1. Rename `main_flask.py` to `main.py`
+2. Rename `requirements-flask.txt` to `requirements.txt`
+3. Update start command to: `python main.py`
+
+**Option 2: Use Minimal Pydantic**
 1. Replace `requirements.txt` with `requirements-minimal.txt`
-2. Or manually set build command: `pip install --upgrade pip && pip install fastapi==0.104.1 uvicorn==0.24.0 selenium==4.15.2 requests==2.31.0 pydantic==2.3.0 python-multipart==0.0.6`
+2. Or manually set build command: `pip install --upgrade pip && pip install fastapi==0.104.1 uvicorn==0.24.0 selenium==4.15.2 requests==2.31.0 pydantic==2.0.3 python-multipart==0.0.6`
+
+**Option 3: Manual Build Command**
+Set build command to: `pip install --upgrade pip && pip install fastapi==0.104.1 uvicorn==0.24.0 selenium==4.15.2 requests==2.31.0 pydantic==2.0.3 python-multipart==0.0.6`
 
 ### Logs
 - Check Render dashboard → Logs tab
