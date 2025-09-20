@@ -20,7 +20,7 @@
 2. Connect your GitHub repository
 3. Configure the service:
    - **Name**: `clubhouse-bot-api`
-   - **Environment**: `Python 3`
+   - **Runtime**: `Python 3`
    - **Build Command**: `pip install -r requirements.txt`
    - **Start Command**: `uvicorn main:app --host 0.0.0.0 --port $PORT`
    - **Plan**: Free (or paid for better performance)
@@ -66,9 +66,15 @@ const API_BASE_URL = 'https://your-app-name.onrender.com';
 
 ### Common Issues
 1. **Build Fails**: Check requirements.txt and Python version
-2. **Selenium Errors**: Ensure Chrome options are correct for headless mode
-3. **Memory Issues**: Free tier has limited RAM
-4. **Slow Performance**: Consider upgrading to paid plan
+2. **Pydantic Compilation Error**: Use `requirements-minimal.txt` instead
+3. **Selenium Errors**: Ensure Chrome options are correct for headless mode
+4. **Memory Issues**: Free tier has limited RAM
+5. **Slow Performance**: Consider upgrading to paid plan
+
+### Fix Build Errors
+If you get pydantic compilation errors:
+1. Replace `requirements.txt` with `requirements-minimal.txt`
+2. Or manually set build command: `pip install --upgrade pip && pip install fastapi==0.104.1 uvicorn==0.24.0 selenium==4.15.2 requests==2.31.0 pydantic==2.3.0 python-multipart==0.0.6`
 
 ### Logs
 - Check Render dashboard → Logs tab
