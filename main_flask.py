@@ -129,15 +129,12 @@ def signup_clubhouse():
             is_cloud = os.getenv('RENDER', False) or os.getenv('PORT', False)
             
             if is_cloud:
-                # Cloud deployment - headless mode
-                chrome_options.add_argument("--headless")
-                chrome_options.add_argument("--no-sandbox")
-                chrome_options.add_argument("--disable-dev-shm-usage")
-                chrome_options.add_argument("--disable-gpu")
-                chrome_options.add_argument("--window-size=1920,1080")
-            else:
-                # Local development - visible browser
-                chrome_options.add_experimental_option("detach", True)
+                # Cloud deployment - return error since headless signup won't work
+                print("Signup not supported in cloud environment. Please use local development.")
+                return
+            
+            # Local development - visible browser
+            chrome_options.add_experimental_option("detach", True)
             
             driver = webdriver.Chrome(options=chrome_options)
             driver.get("https://www.clubhouse.com/signin")
@@ -161,6 +158,12 @@ def signup_clubhouse():
             driver.quit()
         except Exception as e:
             print(f"Signup error: {str(e)}")
+    
+    # Check if running in cloud environment
+    is_cloud = os.getenv('RENDER', False) or os.getenv('PORT', False)
+    
+    if is_cloud:
+        return {"error": "Automated signup is not supported in cloud environment. Please use local development or manually extract session token."}, 400
     
     threading.Thread(target=run_signup_browser, daemon=True).start()
     return {"message": "Signup process started. Check browser window."}
